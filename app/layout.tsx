@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import MainPanel from "@/components/MainPanel";
+import Navigation from "@/components/Navigation";
+import Container from "@/components/Container";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,7 +27,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>{children}</body>
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-neutral-700 text-white flex items-center`}>
+        <Container className="flex w-2/3 aspect-[16/9] gap-8">
+          {/* We can use conditional rendering to remove this if not logged in */}
+          <Navigation />
+          
+          <MainPanel>{children}</MainPanel>
+        </Container>
+      </body>
     </html>
   );
 }

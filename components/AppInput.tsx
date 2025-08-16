@@ -11,7 +11,7 @@ interface AppInputProps {
 
 const AppInput = ({ label, id, type }: AppInputProps) => {
   return (
-    <div className="space-y-2">
+    <div className="space-y-2 ">
       <Label htmlFor={id}>{label}</Label>
       <Input id={id} type={type} />
     </div>

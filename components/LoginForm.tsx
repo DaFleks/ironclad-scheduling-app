@@ -6,14 +6,18 @@ import { Button } from "./ui/button";
 
 import Form from "./Form";
 import AppInput from "./AppInput";
+import Container from "./Container";
+import Image from "next/image";
+
+import ironcladLogo from "../public/ironclad-logo.svg";
 
 const LoginForm = () => {
   return (
-    <div className="w-1/5 border rounded bg-white p-4 shadow">
-      {/* Placeholder logo will delete after */}
-      <div className="w-[100px] aspect-square bg-red-600 flex items-center justify-center mx-auto mb-4 text-white font-bold rounded">LOGO</div>
-
-      <h3 className="font-bold text-2xl text-center">Login</h3>
+    <Container className="w-1/4 space-y-4">
+      {/* Logo */}
+      <div className="relative aspect-square">
+        <Image src={ironcladLogo} fill alt="Iron Clad Security Logo" objectFit="contain" className="pr-4 py-4" />
+      </div>
 
       <Form>
         <AppInput id="email" label="Email" type="email" />
@@ -23,7 +27,7 @@ const LoginForm = () => {
         </Link>
         <Button className="w-full cursor-pointer">LOGIN</Button>
       </Form>
-    </div>
+    </Container>
   );
 };
 

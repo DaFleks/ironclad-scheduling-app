@@ -1,12 +1,11 @@
+import Container from "@/components/Container";
 import LoginForm from "@/components/LoginForm";
 
 const page = () => {
-  //
-
   return (
-    <div className="bg-gray-200 h-full p-4 flex items-center justify-center">
+    <Container className="h-full flex items-center">
       <LoginForm />
-    </div>
+    </Container>
   );
 };
 
