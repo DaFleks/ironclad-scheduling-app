@@ -4,10 +4,51 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Colors */
+  --color-black-primary:   #232121; /* card */
+  --color-black-secondary: #2A2A2A; /* nav */
+  --color-black-tertiary:  #1E1D1D; /* notes */
+
+  --color-font-primary:    #E9E9E9; /* white text */
+  --color-font-secondary:  #8D8D8D; /* gray text */
+
+  --color-red-light:   #CD3232;
+  --color-red-medium:  #6D3C3C;
+
+  --color-yellow-medium: #AC9941;
+
+  --color-green-light:  #3E9615;
+  --color-green-medium: #457347;
+  --color-green-dark:   #11530A; /* solid button fill */
+
+  --color-gray-light-1:  #979797; /* selected button border - staff icon button specifically */
+  --color-gray-light-2:  #2E2E2E; /* stateful button border */
+  --color-gray-medium:   #565656; /* selected option - staff selection during scheduling */
+  --color-gray-dark-1:   #2B2929; /* unselected option - staff selection during scheduling */
+  --color-gray-dark-2:   #2A2828; /* selected button fill - staff icon button specifically */
+
+  /* Gradients i.e. when using gradient as fill: bg-[image:var(--gradient-black)] */
+  --gradient-black: linear-gradient(90deg, #1D1D1D 0%, #1E1E1E 100%); /* stateless button fill */
+  --gradient-gray: linear-gradient(180deg, #323232, #232222); /* background */
+  --gradient-red: linear-gradient(111deg, #824343 10.11%, #6C4141 64.1%);
+  --gradient-yellow: linear-gradient(111deg, #B19F43 10.11%, #7A6D2E 64.1%);
+  --gradient-green-light: linear-gradient(111deg, #629C67 10.11%, #3E693F 64.1%);
+  --gradient-green-dark: linear-gradient(92deg, #22381A 0%, #1F1F1F 52.05%); /* stateful button fill when selected*/
+
+  /* Shadows */
+  /* --shadow-inset: 0 0 6px 0 rgba(0,0,0,0.57) inset;  [TODO] we may need another type of shadow for other inputs*/
+  --shadow-inset: 0 0 4px 2 rgba(0,0,0,0.20) inset;     /* inputs */
+  --shadow-elev:  2px 3px 4px 0 rgba(0,0,0,0.18);       /* buttons */
+
+  /* fonts, radii, spacing tokens can live here too */
+  --font-sans: var(--font-k2d);
+  --text-tiny: 0.625rem;
+
+  
+  /* default styles */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --text-tiny: 0.625rem;
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -37,10 +78,53 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --radius-xs: calc(var(--radius) - 8px);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+}
+
+/* ---- Convenience utilities (keeps markup clean) ---- */
+
+@layer utilities {
+  /* 1px gradient border wrapper for inputs/buttons/panels */
+  .gradient-frame {
+    border-radius: theme(--radius-xs);
+    padding: 1px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* Directional gradients for the border */
+  .gradient-border-x { background-image: linear-gradient(to right,  var(--border-black-start), var(--border-black-end)); }
+  .gradient-border-y { background-image: linear-gradient(to bottom, var(--border-black-start), var(--border-black-end)); }
+
+  /* Input inner styling */
+  .field-inner {
+    @apply h-11 w-full border-0 bg-black-primary text-font-primary
+           focus-visible:ring-0;
+    border-radius: inherit;
+    box-shadow: var(--shadow-inset);
+  }
+  .field-inner::placeholder {
+    @apply text-font-secondary/70;
+  }
+
+  /* Button inner*/
+  .btn-inner {
+    @apply h-11 w-full border-0 disabled:opacity-60 disabled:pointer-events-none;
+    border-radius: inherit;
+    color: var(--color-font-primary);
+    background-color: var(--color-black-primary);
+    box-shadow: var(--shadow-elev), inset 0 1px 0 rgba(255,255,255,0.06);
+  }
+  .btn-inner:hover { background-color: var(--color-black-tertiary); }
+  .btn-inner:active { background-color: var(--color-black-tertiary); }
+ 
+   /* Stateless / stateful gradient fills */
+  .btn-fill-black  { background-image: var(--gradient-black); }
+  .btn-fill-green  { background-image: var(--gradient-green-dark); } 
 }
 
 @media (prefers-color-scheme: dark) {
@@ -83,6 +167,11 @@
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  /* Custom tokens */
+  --border-black-start: oklch(0.5103 0 89); /* #666666 */
+  --border-black-end: oklch(0 0 0); /* #000000 */
+  --border-green-start: oklch(0.3608 0.0439 129.23); /* #364229 */
+  --border-green-end: oklch(0.47 0.0939 129.96); /* #496528 */
 }
 
 .dark {

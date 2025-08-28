@@ -14,10 +14,10 @@ interface NavLinkProps {
 
 const NavLink = ({ href, text, icon: Icon }: NavLinkProps) => {
   return (
-    <Button variant="ghost" asChild className="flex-col h-fit aspect-square !p-2 hover:bg-neutral-700 hover:text-white">
+    <Button variant="ghost" asChild className="flex-col h-fit !py-3 !px-1 rounded-sm hover:bg-gray-medium/20 hover:text-font-primary">
       <Link href={href} className="space-y-1">
-        <Icon className="mx-auto !w-8 !h-8 text-neutral-400" />
-        <span className="text-xs">{text}</span>
+        <Icon className="mx-auto !w-5 !h-5 text-neutral-400" />
+        <span className="text-tiny">{text}</span>
       </Link>
     </Button>
   );

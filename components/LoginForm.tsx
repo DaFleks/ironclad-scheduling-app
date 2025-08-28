@@ -3,29 +3,32 @@
 import Link from "next/link";
 
 import { Button } from "./ui/button";
+import { Label } from "./ui/label";
+import { Input } from "./ui/input";
 
 import Form from "./Form";
-import AppInput from "./AppInput";
 import Container from "./Container";
-import Image from "next/image";
-
-import ironcladLogo from "../public/ironclad-logo.svg";
 
 const LoginForm = () => {
   return (
-    <Container className="w-1/4 space-y-4">
-      {/* Logo */}
-      <div className="relative aspect-square">
-        <Image src={ironcladLogo} fill alt="Iron Clad Security Logo" objectFit="contain" className="pr-4 py-4" />
-      </div>
-
+    <Container className="w-1/4 space-y-4 min-w-[200px] max-w-[300px]">
       <Form>
-        <AppInput id="email" label="Email" type="email" />
-        <AppInput id="password" label="Password" type="password" />
-        <Link href="#" className="text-xs font-semibold float-end">
+        <div className="space-y-2 px-1">
+          <Label htmlFor="email" className="sr-only">Email</Label>
+          <div className="gradient-frame gradient-border-x space-y-2 ">
+            <Input id="email" type="email" placeholder="Email" className="field-inner" />
+          </div>
+          <Label htmlFor="password" className="sr-only">Password</Label>
+          <div className="gradient-frame gradient-border-x space-y-2">
+            <Input id="password" type="password" placeholder="Password" className="field-inner" />
+          </div>
+        </div>
+        <div className="gradient-frame gradient-border-x">
+          <Button className="btn-inner cursor-pointer">Log in</Button>
+        </div>
+        <Link href="#" className="text-tiny float-start">
           Forgot password?
         </Link>
-        <Button className="w-full cursor-pointer">LOGIN</Button>
       </Form>
     </Container>
   );
