@@ -8,10 +8,15 @@ interface ContainerProps {
   className?: string;
   children?: React.ReactNode;
   as?: ElementType;
+  noStyle?: boolean;
 }
 
-const Container = ({ id, className, children, as: Tag = "div" }: ContainerProps) => {
-  return <Tag id={id} className={cn("p-4 mx-auto", className)}>{children}</Tag>;
+const Container = ({ id, className, children, as: Tag = "div", noStyle }: ContainerProps) => {
+  return (
+    <Tag id={id} className={cn(noStyle ? "p-4 mx-auto" : "", className)}>
+      {children}
+    </Tag>
+  );
 };
 
 export default Container;
