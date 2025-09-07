@@ -13,7 +13,7 @@ interface ContainerProps {
 
 const Container = ({ id, className, children, as: Tag = "div", noStyle }: ContainerProps) => {
   return (
-    <Tag id={id} className={cn(noStyle ? "p-4 mx-auto" : "", className)}>
+    <Tag id={id} className={cn(noStyle ? "" : "p-4 mx-auto", className)}>
       {children}
     </Tag>
   );

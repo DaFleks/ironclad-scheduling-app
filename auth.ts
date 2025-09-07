@@ -32,11 +32,23 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         } catch (error) {
           if (error instanceof ZodError) {
             // Return `null` to indicate that the credentials are invalid via Zod
-            return null;
+            user = null;
           }
         }
         return user;
       },
     }),
   ],
+  session: { strategy: "jwt" }, // or "database" if you prefer
+  pages: { signIn: "/login" }, // optional custom page
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) token.role = (user as any).role || "user";
+      return token;
+    },
+    async session({ session, token }) {
+      session.user.role = (token as any).role;
+      return session;
+    },
+  },
 });
