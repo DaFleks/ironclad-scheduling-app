@@ -13,7 +13,7 @@ const GuardsList = ({ guards }: { guards: { id: Number; userAvatar: String; name
   return (
     <Profile title="Guards" total={guards.length}>
       <Container noStyle as="ul">
-        {guards.map((guard) => (
+        {guards.map((guard, i) => (
           <Container noStyle as="li" key={guard.id.toString()} className="pr-4">
             <Container className="flex items-center gap-4">
               <Avatar>
@@ -27,7 +27,7 @@ const GuardsList = ({ guards }: { guards: { id: Number; userAvatar: String; name
                 <PencilIcon />
               </Button>
             </Container>
-            <Separator className="my-4 bg-gray-medium" />
+            {i !== guards.length - 1 && <Separator className="my-4 bg-gray-medium" />}
           </Container>
         ))}
       </Container>
