@@ -29,11 +29,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           //  Check if the password provided matches the hashed password in the DB
           //  If there's no match, user is removed from the variable (trying to avoid multiple return statements)
           if (!(await bcrypt.compare(password, user!.password))) user = null;
-        } catch (error) {
-          if (error instanceof ZodError) {
+        } catch (err) {
+          if (err instanceof ZodError) {
             // Return `null` to indicate that the credentials are invalid via Zod
-            user = null;
+
           }
+
+          user = null;
         }
         return user;
       },

@@ -13,12 +13,13 @@ import { FormEvent } from "react";
 import { signIn } from "next-auth/react";
 
 const LoginForm = () => {
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const email = formData.get("email");
     const password = formData.get("password");
-    signIn("credentials", { email, password });
+
+    const response = await signIn("credentials", { email, password, redirectTo: "/" });
   };
 
   return (
@@ -28,14 +29,14 @@ const LoginForm = () => {
           <Label htmlFor="email" className="sr-only">
             Email
           </Label>
-          <Container className="gradient-frame gradient-border-x space-y-2 ">
-            <Input id="email" type="email" name="email" placeholder="Email" className="field-inner" />
+          <Container className="gradient-frame gradient-border-x space-y-2">
+            <Input id="email" type="email" name="email" placeholder="Email" className="field-inner" required min="8" />
           </Container>
           <Label htmlFor="password" className="sr-only">
             Password
           </Label>
           <Container className="gradient-frame gradient-border-x space-y-2">
-            <Input id="password" type="password" name="password" placeholder="Password" className="field-inner" />
+            <Input id="password" type="password" name="password" placeholder="Password" className="field-inner" required min="8" max="32" />
           </Container>
         </Container>
         <Container className="gradient-frame gradient-border-x">
