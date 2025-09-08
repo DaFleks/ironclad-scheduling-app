@@ -40,3 +40,17 @@ export const guardsList = [
   { id: 39, userAvatar: "", name: "Ryan Green", hourly: 43.5 },
   { id: 40, userAvatar: "", name: "Penelope Baker", hourly: 28.25 },
 ];
+
+export const venuesList = [
+  { id: 1, userAvatar: "", name: "Paris Texas", address: '461 King St. West' },
+  { id: 2, userAvatar: "", name: "Pizza Wine Disco", address: '788 King St. West' },
+  { id: 3, userAvatar: "", name: "National", address: '486 Front St. West' },
+  { id: 4, userAvatar: "", name: "Aera", address: '8 Spadina Ave.' },
+  { id: 5, userAvatar: "", name: "Cibo King", address: '522 King St. West' },
+  { id: 6, userAvatar: "", name: "Blue Bovine", address: '65 Front St. West' }
+];
+
+export const usersList = [
+  { id: 1, userAvatar: "", name: "Alex Petropoulos", role: 'Admin' },
+  { id: 2, userAvatar: "", name: "Cathy da Cunha", role: 'Admin' }
+];

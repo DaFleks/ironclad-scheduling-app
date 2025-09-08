@@ -15,22 +15,22 @@ const HeadingText = ({ children, as: Tag = "h1", className }: HeadingTextProps) 
 
   switch (Tag) {
     case "h1":
-      defaultClassName += " text-6xl";
-      break;
-    case "h2":
-      defaultClassName += " text-5xl";
-      break;
-    case "h3":
-      defaultClassName += " text-4xl";
-      break;
-    case "h4":
-      defaultClassName += " text-3xl";
-      break;
-    case "h5":
       defaultClassName += " text-2xl";
       break;
-    case "h6":
+    case "h2":
       defaultClassName += " text-xl";
+      break;
+    case "h3":
+      defaultClassName += " text-lg";
+      break;
+    case "h4":
+      defaultClassName += " text-base";
+      break;
+    case "h5":
+      defaultClassName += " text-sm";
+      break;
+    case "h6":
+      defaultClassName += " text-xs";
       break;
   }
 

@@ -6,8 +6,7 @@ const page = () => {
   return (
     <Container className="h-full w-full flex flex-col items-center justify-center">
       <Logo />
-      {/* Provider temporary, we can decide how we want to use session at a later point */}
-
+      {/* SessionProvider temporary, we can decide how we want to use session at a later point */}
       <LoginForm />
     </Container>
   );

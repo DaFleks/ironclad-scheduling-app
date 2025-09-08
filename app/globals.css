@@ -38,8 +38,9 @@
 
   /* Shadows */
   /* --shadow-inset: 0 0 6px 0 rgba(0,0,0,0.57) inset;  [TODO] we may need another type of shadow for other inputs*/
-  --shadow-inset: 0 0 4px 2 rgba(0,0,0,0.20) inset;     /* inputs */
+  --shadow-inset: 0 0 4px 2px rgba(0,0,0,0.20) inset;     /* inputs */
   --shadow-elev:  2px 3px 4px 0 rgba(0,0,0,0.18);       /* buttons */
+  /* add shadows for debossed outer, debossed inner, and divider */
 
   /* fonts, radii, spacing tokens can live here too */
   --font-sans: var(--font-k2d);
@@ -79,6 +80,7 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --radius-xxs: calc(var(--radius) - 16px);
   --radius-xs: calc(var(--radius) - 8px);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -126,6 +128,28 @@
    /* Stateless / stateful gradient fills */
   .btn-fill-black  { background-image: var(--gradient-black); }
   .btn-fill-green  { background-image: var(--gradient-green-dark); } 
+
+  .divider {
+    height: 80%;
+    padding: 3px;
+    position: absolute;
+    bottom: 0px;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-inset); /* TODO: [Cathy] update the shadow-inset for the divider, the one used is for inputs */
+  }
+
+  .debossed-outer {
+    width: 100%;
+    padding: 4px;
+    margin-top: calc(var(--spacing) * 8);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-inset); /* TODO: update shadow*/
+  }
+  .debossed-inner {
+    width: 100%;
+    box-shadow: var(--shadow-elev); /* TODO: update shadow*/
+    border-radius: var(--radius-xs);
+  }
 }
 
 @media (prefers-color-scheme: dark) {
