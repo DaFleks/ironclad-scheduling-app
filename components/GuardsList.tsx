@@ -14,7 +14,7 @@ interface GuardListProps {
   userAvatar?: string;
   name: string;
   hourly: number;
-};
+}
 
 const GuardsList = ({ guards }: { guards: GuardListProps[] }) => {
   return (
@@ -34,7 +34,8 @@ const GuardsList = ({ guards }: { guards: GuardListProps[] }) => {
                 <PencilIcon />
               </Button>
             </Container>
-            {i !== guards.length - 1 && <Separator className="my-2 bg-gray-medium" />} {/* TODO: make this a dashed line*/}
+            {i !== guards.length - 1 && <Separator className="my-2 bg-transparent border border-dotted border-gray-medium box-border" />}
+            {/* TODO: make this a dashed line*/}
           </Container>
         ))}
       </Container>
