@@ -4,6 +4,7 @@ import { CirclePlusIcon } from "lucide-react";
 import Container from "./Container";
 import HeadingText from "./HeadingText";
 import Link from "next/link";
+import Debossed from "./Debossed";
 
 interface ProfileProps {
   title?: string;
@@ -26,12 +27,14 @@ const Profile = ({ title, children, total = 0 }: ProfileProps) => {
       <Container noStyle className="overflow-y-auto scrollbar-thin scrollbar-thumb-gray-medium scrollbar-track-black-secondary grow p-0">
         {children}
       </Container>
-      {/* TODO: make this a Debossed component */}
-      <Container noStyle className="debossed-outer">
-        <Container noStyle className="debossed-inner">
-          <Container as="p" className="w-full p-4 px-8 text-end text-xs font-bold">Total {title}: <Container as="span" noStyle className="text-font-secondary">{total}</Container></Container>
+      <Debossed>
+        <Container as="p" className="w-full p-4 px-8 text-end text-xs font-bold">
+          Total {title}:
+          <Container as="span" noStyle className="text-font-secondary">
+            {total}
+          </Container>
         </Container>
-      </Container>
+      </Debossed>
     </Container>
   );
 };

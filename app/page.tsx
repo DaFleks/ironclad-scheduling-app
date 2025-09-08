@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import Divider from "@/components/Divider";
 import GuardsList from "@/components/GuardsList";
 import Profile from "@/components/Profile";
 
@@ -9,14 +10,9 @@ export default function Profiles() {
   return (
     <Container id="profiles-page" className="h-[90%] w-full flex gap-4 m-auto">
       <GuardsList guards={guardsList} />
-      <Container noStyle className="relative">
-        <Container className="divider" />
-      </Container>
+      <Divider />
       <Profile title="Venues" />
-      {/* TODO: make this a Divider component */}
-      <Container noStyle className="relative">
-        <Container className="divider" />
-      </Container>
+      <Divider />
       <Profile title="Users" />
     </Container>
   );
