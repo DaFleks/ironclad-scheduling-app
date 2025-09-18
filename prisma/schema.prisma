@@ -56,12 +56,12 @@ model User {
    * Changed permissions to single string as it doesn't support a list for primitive types,
    * we can possibly delimit permissions by ',' or talk about how we go about it
    */
-  isActive    Boolean @default(true)
+  isActive    Boolean @default(false)
 
   // Metadata
   phoneNumber    String?
   streetAddress  String?
-  unitNumber     String?
+  unitNumber     String? // REMOVE
   city           String?
   province       String?
   postalCode     String?

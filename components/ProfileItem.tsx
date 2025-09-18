@@ -7,6 +7,7 @@ import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 
 import Container from "./Container";
+import Text from "./Text";
 
 interface ProfileItemProps {
   text?: string;
@@ -16,21 +17,21 @@ interface ProfileItemProps {
 
 const ProfileItem = ({ text = "", subText = "", last }: ProfileItemProps) => {
   return (
-    <Container noStyle as="li" className="pr-4">
-      <Container className="flex items-center gap-4 !px-[0px]">
+    <li className="pr-4">
+      <Container className="flex items-center gap-4 !px-[0px] p-4">
         <Avatar>
           <AvatarFallback>{text[0]}</AvatarFallback>
         </Avatar>
-        <Container noStyle className="space-y-1 w-full">
-          <p className="text-sm font-semibold">{text}</p>
-          <p className="text-xs text-font-secondary">{subText}</p>
+        <Container className="space-y-1 w-full">
+          <Text className="text-sm font-semibold">{text}</Text>
+          <Text className="text-xs text-font-secondary">{subText}</Text>
         </Container>
         <Button variant="ghost" className="cursor-pointer hover:bg-gray-medium/20 hover:text-font-primary">
           <PencilIcon />
         </Button>
       </Container>
       {!last && <Separator className="my-2 bg-transparent border border-dotted border-gray-medium box-border" />}
-    </Container>
+    </li>
   );
 };
 

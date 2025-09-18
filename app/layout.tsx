@@ -31,7 +31,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={`${k2d.variable} antialiased text-font-primary overflow-y-hidden`}>
-        <Container noStyle className={`flex items-center w-full h-full gap-10 px-10 bg-gradient-to-tr from-neutral-700 to-neutral-800`}>
+        <Container className={`flex items-center w-full h-full gap-10 px-10 bg-gradient-to-tr from-neutral-700 to-neutral-800`}>
           {session && <Navigation />}
           <MainPanel>{children}</MainPanel>
         </Container>

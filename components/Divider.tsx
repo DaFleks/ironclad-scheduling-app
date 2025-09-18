@@ -4,7 +4,7 @@ import Container from "./Container";
 
 const Divider = () => {
   return (
-    <Container noStyle className="relative">
+    <Container className="relative">
       <Container className="divider" />
     </Container>
   );

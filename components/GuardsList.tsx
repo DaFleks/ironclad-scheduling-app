@@ -19,14 +19,14 @@ interface GuardListProps {
 const GuardsList = ({ guards }: { guards: GuardListProps[] }) => {
   return (
     <Profile title="Guards" total={guards.length}>
-      <Container noStyle as="ul">
+      <ul>
         {guards.map((guard, i) => (
-          <Container noStyle as="li" key={guard.id.toString()} className="pr-4">
+          <li key={guard.id.toString()} className="pr-4">
             <Container className="flex items-center gap-4 !px-[0px]">
               <Avatar>
                 <AvatarFallback>{guard.name[0]}</AvatarFallback>
               </Avatar>
-              <Container noStyle className="space-y-1 w-full">
+              <Container className="space-y-1 w-full">
                 <p className="text-sm font-semibold">{guard.name}</p>
                 <p className="text-xs text-font-secondary">Hourly: ${guard.hourly.toFixed(2)}</p>
               </Container>
@@ -36,9 +36,9 @@ const GuardsList = ({ guards }: { guards: GuardListProps[] }) => {
             </Container>
             {i !== guards.length - 1 && <Separator className="my-2 bg-transparent border border-dotted border-gray-medium box-border" />}
             {/* TODO: make this a dashed line*/}
-          </Container>
+          </li>
         ))}
-      </Container>
+      </ul>
     </Profile>
   );
 };

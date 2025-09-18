@@ -15,7 +15,7 @@ const Navigation = () => {
   const pathname = usePathname();
 
   return (
-    <Container noStyle className="gradient-frame gradient-border-y !rounded-md">
+    <Container className="gradient-frame gradient-border-y !rounded-md">
       <Container
         as="nav"
         className="!p-2 self-center flex flex-col justify-center gap-2 bg-black-secondary rounded-[inherit] shadow-lg shadow-neutral-900">

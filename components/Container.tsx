@@ -1,19 +1,21 @@
-"use client";
-
 import { cn } from "@/lib/utils";
-import { ElementType } from "react";
+import React, { CSSProperties, ElementType, ComponentPropsWithoutRef } from "react";
 
-interface ContainerProps {
-  id?: string;
-  className?: string;
+type Containers = "div" | "header" | "nav" | "main" | "section" | "article" | "aside" | "footer";
+
+type ContainerProps<T extends ElementType> = {
+  as?: T;
   children?: React.ReactNode;
-  as?: ElementType;
-  noStyle?: boolean;
-}
+  className?: string;
+  padded?: boolean;
+  center?: boolean;
+  style?: CSSProperties;
+} & ComponentPropsWithoutRef<T>;
 
-const Container = ({ id, className, children, as: Tag = "div", noStyle }: ContainerProps) => {
+const Container = <T extends Containers = "div">({ children, as, className, padded, center, style, ...props }: ContainerProps<T>) => {
+  const Tag = as || "div";
   return (
-    <Tag id={id} className={cn(noStyle ? "" : "p-4 mx-auto", className)}>
+    <Tag className={cn(className, `${padded && "p-4"} ${center && "mx-auto"}`)} style={style} {...props}>
       {children}
     </Tag>
   );

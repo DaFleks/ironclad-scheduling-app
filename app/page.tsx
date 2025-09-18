@@ -7,9 +7,10 @@ import { guardsList, venuesList, usersList } from "@/dummyData";
 import { checkIsLastItem } from "@/lib/utils";
 
 export default function Profiles() {
+  // check user, see hwat perms they have, 
   //  TODO: One function that does an API call to request Guards, Venues & Users, the route would return all 3 sets of data at once.
   return (
-    <Container id="profiles-page" className="h-[90%] w-full flex gap-4 m-auto">
+    <Container id="profiles-page" className="p-12 h-[90%] w-full flex gap-4 m-auto">
       <Profile title="Guards" total={guardsList.length}>
         {guardsList.map((guard, i) => (
           <ProfileItem key={guard.id} text={guard.name} subText={`Hourly: $${guard.hourly}`} last={checkIsLastItem(i, guardsList.length)} />
