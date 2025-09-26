@@ -5,16 +5,15 @@ import Container from "./Container";
 
 interface DebossedProps {
   children?: React.ReactNode;
-  text?: string;
   outerClassName?: string;
   innerClassName?: string;
 }
 
-const Debossed = (props: DebossedProps) => {
+const Debossed = ({ children, outerClassName, innerClassName }: DebossedProps) => {
   return (
-    <Container className={cn("debossed-outer", props.outerClassName)}>
-      <Container className={cn("debossed-inner h-full w-full", props.innerClassName)}>
-        {props.children}
+    <Container className={cn("debossed-outer", outerClassName)}>
+      <Container className={cn("debossed-inner h-full w-full", innerClassName)}>
+        {children}
       </Container>
     </Container>
   );

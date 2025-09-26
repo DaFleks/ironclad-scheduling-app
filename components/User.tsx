@@ -8,7 +8,7 @@ import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 import Container from "./Container";
-import HeadingText from "./HeadingText";
+import Heading from "./Heading";
 import UserForm from "./UserForm";
 
 import { useToggle } from "@/hooks/useToggle";
@@ -33,7 +33,7 @@ const User = (props: UserProps) => {
       </Container>
       <Container className="p-8 w-full h-full space-y-8 overflow-y-scroll scrollbar-thin scrollbar-thumb-gray-medium scrollbar-track-black-secondary">
         <Container className="space-y-1">
-          <HeadingText as="h6">Personal Info / Verifications</HeadingText>
+          <Heading as="h1" variant="section">Personal Info / Verifications</Heading>
           <Text className="text-xs text-font-secondary">Enter User Information</Text>
         </Container>
         <UserForm setCurrentAvatar={setCurrentAvatar} />

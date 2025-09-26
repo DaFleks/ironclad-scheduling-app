@@ -5,7 +5,7 @@ import Link from "next/link";
 import { CirclePlusIcon } from "lucide-react";
 
 import Container from "./Container";
-import HeadingText from "./HeadingText";
+import Heading from "./Heading";
 import Debossed from "./Debossed";
 import Text from "./Text";
 
@@ -19,7 +19,7 @@ const Profile = (props: ProfileProps) => {
   return (
     <Container className="w-full px-[0px] mx-5 overflow-y-hidden bg-transparent flex flex-col justify-between gap-4">
       <Container className="space-y-2 mb-8">
-        <HeadingText as="h4">{props.title}</HeadingText>
+        <Heading as="h1" className="text-blue-50 opacity-30">{props.title}</Heading>
         <Container className="text-xs text-font-secondary flex items-center gap-2">
           Register new {props.title?.toLowerCase().slice(0, -1)}
           <Link href={`${props.title?.toLowerCase()}/add`} className="rounded-full bg-green-medium">
