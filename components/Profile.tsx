@@ -4,10 +4,10 @@ import Link from "next/link";
 
 import { CirclePlusIcon } from "lucide-react";
 
-import Container from "./Container";
-import Heading from "./Heading";
-import Debossed from "./Debossed";
-import Text from "./Text";
+import Container from "./ironclad/Container";
+import Heading from "./ironclad/Heading";
+import Debossed from "./ironclad/Debossed";
+import Text from "./ironclad/Text";
 
 interface ProfileProps {
   title?: string;

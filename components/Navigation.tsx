@@ -8,7 +8,7 @@ import { Calendar, DollarSignIcon, LogOutIcon, WalletCards, UserCircleIcon } fro
 
 import { Separator } from "./ui/separator";
 
-import Container from "./Container";
+import Container from "./ironclad/Container";
 import NavLink from "./NavLink";
 
 const Navigation = () => {

@@ -3,7 +3,7 @@ import { K2D } from "next/font/google";
 import "./globals.css";
 import MainPanel from "@/components/MainPanel";
 import Navigation from "@/components/Navigation";
-import Container from "@/components/Container";
+import Container from "@/components/ironclad/Container";
 import { auth } from "../auth";
 
 const k2d = K2D({

@@ -6,8 +6,8 @@ import { Avatar, AvatarFallback } from "./ui/avatar";
 import { Button } from "./ui/button";
 import { Separator } from "./ui/separator";
 
-import Container from "./Container";
-import Text from "./Text";
+import Container from "./ironclad/Container";
+import Text from "./ironclad/Text";
 
 interface ProfileItemProps {
   text?: string;

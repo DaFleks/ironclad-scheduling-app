@@ -1,10 +1,10 @@
-import Container from "./Container";
+import Container from "./ironclad/Container";
 import { auth } from "../auth";
 
 const MainPanel = async ({ children }: { children?: React.ReactNode }) => {
   //  The session flag to see if user is logged in or not
   const session = await auth();
-
+  // TODO: update "main" component to just be a transparent background with vertical flex layout  
   return (
     <Container
       center

@@ -31,7 +31,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           if (!(await bcrypt.compare(password, user!.password))) user = null;
         } catch (err) {
           if (err instanceof ZodError) {
-            // Will refactor to show the ZodError on the front end
+            // TODO: Will refactor to show the ZodError on the front end
           }
 
           user = null;

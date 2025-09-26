@@ -7,17 +7,17 @@ import { User as UserType } from "@/lib/generated/prisma";
 import { Button } from "./ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
-import Container from "./Container";
-import Heading from "./Heading";
+import Container from "./ironclad/Container";
+import Heading from "./ironclad/Heading";
 import UserForm from "./UserForm";
 
 import { useToggle } from "@/hooks/useToggle";
 import { useState } from "react";
-import Text from "./Text";
+import Text from "./ironclad/Text";
 
 interface UserProps {
   user?: UserType | null;
-}
+} // ? what's the though here with user prop?
 
 const User = (props: UserProps) => {
   const [isEditing, handleIsEditing] = useToggle(false);

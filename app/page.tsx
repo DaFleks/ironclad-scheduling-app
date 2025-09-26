@@ -1,5 +1,5 @@
-import Container from "@/components/Container";
-import Divider from "@/components/Divider";
+import Container from "@/components/ironclad/Container";
+import Divider from "@/components/ironclad/Divider";
 import Profile from "@/components/Profile";
 import ProfileItem from "@/components/ProfileItem";
 
@@ -7,9 +7,10 @@ import { guardsList, venuesList, usersList } from "@/dummyData";
 import { checkIsLastItem } from "@/lib/utils";
 
 export default function Profiles() {
-  // check user, see hwat perms they have, 
-  //  TODO: One function that does an API call to request Guards, Venues & Users, the route would return all 3 sets of data at once.
+  // TODO: check user, see what perms they have
+  // TODO: One function that does an API call to request Guards, Venues & Users, the route would return all 3 sets of data at once.
   return (
+    // ? do we need p-12 here? - Cathy double check styles
     <Container id="profiles-page" className="p-12 h-[90%] w-full flex gap-4 m-auto">
       <Profile title="Guards" total={guardsList.length}>
         {guardsList.map((guard, i) => (

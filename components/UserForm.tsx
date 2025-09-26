@@ -1,38 +1,37 @@
 "use client";
 
+import { Dispatch, SetStateAction } from "react";
+import { useForm, type Resolver } from "react-hook-form";
 import { z } from "zod";
-
-import { useForm } from "react-hook-form";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Checkbox } from "@/components/ui/checkbox";
 
-import Debossed from "./Debossed";
-import Container from "./Container";
+import Debossed from "./ironclad/Debossed";
+import Container from "./ironclad/Container";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
-
-import provinces from "@/lib/provinces.json";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Dispatch, SetStateAction } from "react";
-
-import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "./ui/label";
+
 import { useToggle } from "@/hooks/useToggle";
-import { addUser } from "@/lib/api/users/userApi";
+import provinces from "@/lib/provinces.json";
 import { userFormSchema } from "@/lib/formSchemas";
+import { addUser } from "@/lib/api/users/userApi";
 
 interface UserFormProps {
   setCurrentAvatar: Dispatch<SetStateAction<string>>;
 }
 
+type FormValues = z.infer<typeof userFormSchema>;
+
 const UserForm = (props: UserFormProps) => {
   const [includeGuard, toggleIncludeGuard] = useToggle(false);
 
-  const form = useForm<z.infer<typeof userFormSchema>>({
-    resolver: zodResolver(userFormSchema),
+  const form = useForm<FormValues>({
+    resolver: zodResolver(userFormSchema) as Resolver<FormValues>,
     defaultValues: {
       firstName: "",
       lastName: "",
@@ -54,11 +53,12 @@ const UserForm = (props: UserFormProps) => {
       semiFormalAttire: false,
       formalAttire: false,
       guardNotes: "",
-    },
+    }, // TODO: create two objects for default values and combine with spread operator
   });
 
-  const onSubmit = (values: z.infer<typeof userFormSchema>) => {
+  const onSubmit = (values: FormValues) => {
     const formData = new FormData();
+    // add includeGuard to formSchema for routes (not required on DB)
     formData.append("includeGuard", includeGuard ? "true" : "false");
 
     for (let key in values) {
@@ -147,6 +147,7 @@ const UserForm = (props: UserFormProps) => {
                         <SelectValue placeholder="Role" />
                       </SelectTrigger>
                       <SelectContent>
+                        {/* TODO: update role values to object & map through them*/}
                         <SelectItem value="GENERAL">GENERAL</SelectItem>
                         <SelectItem value="ADMIN">ADMIN</SelectItem>
                       </SelectContent>
@@ -262,8 +263,9 @@ const UserForm = (props: UserFormProps) => {
                     accept="image/png,image/jpeg"
                     onChange={(e) => {
                       const file = e.target.files?.[0] || null;
+                      if (!file) return;
                       field.onChange(file);
-                      if (file) props.setCurrentAvatar(URL.createObjectURL(file));
+                      props.setCurrentAvatar(URL.createObjectURL(file));
                     }}
                   />
                 </Debossed>
@@ -310,6 +312,7 @@ const UserForm = (props: UserFormProps) => {
                             <SelectValue placeholder="Employment" />
                           </SelectTrigger>
                           <SelectContent>
+                          {/* TODO: Map on object instead */}
                             <SelectItem value="ACTIVE">Active</SelectItem>
                             <SelectItem value="INACTIVE">Inactive</SelectItem>
                             <SelectItem value="Terminated">Terminated</SelectItem>
@@ -337,6 +340,7 @@ const UserForm = (props: UserFormProps) => {
                           className="field-inner"
                           {...field}
                           value={field.value ?? ""} // ensures controlled
+                          // TODO: add default value of $20
                         />
                       </Debossed>
                     </FormControl>
@@ -361,6 +365,7 @@ const UserForm = (props: UserFormProps) => {
                           accept=".pdf,image/png,image/jpeg"
                           onChange={(e) => {
                             const file = e.target.files?.[0] || null;
+                            if (!file) return;
                             field.onChange(file);
                           }}
                         />
@@ -384,6 +389,7 @@ const UserForm = (props: UserFormProps) => {
                           accept=".pdf,image/png,image/jpeg"
                           onChange={(e) => {
                             const file = e.target.files?.[0] || null;
+                            if (!file) return;
                             field.onChange(file);
                           }}
                         />
@@ -409,8 +415,7 @@ const UserForm = (props: UserFormProps) => {
                       />
                     </FormControl>
                     <FormLabel>Casual</FormLabel>
-
-                    <FormMessage />
+                    <FormMessage /> 
                   </FormItem>
                 )}
               />
@@ -427,7 +432,6 @@ const UserForm = (props: UserFormProps) => {
                       />
                     </FormControl>
                     <FormLabel>Semi-Formal</FormLabel>
-
                     <FormMessage />
                   </FormItem>
                 )}
@@ -445,7 +449,6 @@ const UserForm = (props: UserFormProps) => {
                       />
                     </FormControl>
                     <FormLabel>Formal</FormLabel>
-
                     <FormMessage />
                   </FormItem>
                 )}
