@@ -5,13 +5,19 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Colors */
-  --color-black-primary: #232121; /* card */
-  --color-black-secondary: #2a2a2a; /* nav */
-  --color-black-tertiary: #1e1d1d; /* notes */
+  /* COLOURS */
 
-  --color-font-primary: #e9e9e9; /* white text */
-  --color-font-secondary: #8d8d8d; /* gray text */
+  /* card */
+  --color-black-primary: #232121;
+  /* nav */
+  --color-black-secondary: #2a2a2a;
+  /* notes */
+  --color-black-tertiary: #1e1d1d;
+
+  /* white text */
+  --color-font-primary: #e9e9e9;
+  /* gray text */
+  --color-font-secondary: #8d8d8d;
 
   --color-red-light: #cd3232;
   --color-red-medium: #6d3c3c;
@@ -20,26 +26,38 @@
 
   --color-green-light: #3e9615;
   --color-green-medium: #457347;
-  --color-green-dark: #11530a; /* solid button fill */
+  /* solid button fill */
+  --color-green-dark: #11530a;
 
-  --color-gray-light-1: #979797; /* selected button border - staff icon button specifically */
-  --color-gray-light-2: #2e2e2e; /* stateful button border */
-  --color-gray-medium: #565656; /* selected option - staff selection during scheduling */
-  --color-gray-dark-1: #2b2929; /* unselected option - staff selection during scheduling */
-  --color-gray-dark-2: #2a2828; /* selected button fill - staff icon button specifically */
+  /* selected button border - staff icon button specifically */
+  --color-gray-light-1: #979797;
+  /* stateful button border */
+  --color-gray-light-2: #2e2e2e;
+  /* selected option - staff selection during scheduling */
+  --color-gray-medium: #565656;
+  /* unselected option - staff selection during scheduling */
+  --color-gray-dark-1: #2b2929;
+  /* selected button fill - staff icon button specifically */
+  --color-gray-dark-2: #2a2828;
 
-  /* Gradients i.e. when using gradient as fill: bg-[image:var(--gradient-black)] */
-  --gradient-black: linear-gradient(90deg, #1d1d1d 0%, #1e1e1e 100%); /* stateless button fill */
-  --gradient-gray: linear-gradient(180deg, #323232, #232222); /* background */
+  /* GRADIENTS */
+  /* i.e. when using gradient as fill: bg-[image:var(--gradient-black)] */
+  /* stateless button fill */
+  --gradient-black: linear-gradient(90deg, #1d1d1d 0%, #1e1e1e 100%);
+  /* background */
+  --gradient-gray: linear-gradient(180deg, #323232, #232222);
   --gradient-red: linear-gradient(111deg, #824343 10.11%, #6c4141 64.1%);
   --gradient-yellow: linear-gradient(111deg, #b19f43 10.11%, #7a6d2e 64.1%);
   --gradient-green-light: linear-gradient(111deg, #629c67 10.11%, #3e693f 64.1%);
-  --gradient-green-dark: linear-gradient(92deg, #22381a 0%, #1f1f1f 52.05%); /* stateful button fill when selected*/
+  /* stateful button fill when selected*/
+  --gradient-green-dark: linear-gradient(92deg, #22381a 0%, #1f1f1f 52.05%);
 
-  /* Shadows */
+  /* SHADOWS */
   /* --shadow-inset: 0 0 6px 0 rgba(0,0,0,0.57) inset;  [TODO] we may need another type of shadow for other inputs*/
-  --shadow-inset: 0 0 4px 2px rgba(0, 0, 0, 0.2) inset; /* inputs */
-  --shadow-elev: 2px 3px 4px 0 rgba(0, 0, 0, 0.18); /* buttons */
+  /* inputs */
+  --shadow-inset: 0 0 4px 2px rgba(0, 0, 0, 0.2) inset;
+  /* buttons */
+  --shadow-elev: 2px 3px 4px 0 rgba(0, 0, 0, 0.18);
   /* add shadows for debossed outer, debossed inner, and divider */
 
   /* fonts, radii, spacing tokens can live here too */
@@ -87,9 +105,10 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
-/* ---- Convenience utilities (keeps markup clean) ---- */
+/* ---- UTILITIES ---- */
 
 @layer utilities {
+
   /* 1px gradient border wrapper for inputs/buttons/panels */
   .gradient-frame {
     border-radius: theme(--radius-xs);
@@ -102,17 +121,18 @@
   .gradient-border-x {
     background-image: linear-gradient(to right, var(--border-black-start), var(--border-black-end));
   }
+
   .gradient-border-y {
     background-image: linear-gradient(to bottom, var(--border-black-start), var(--border-black-end));
   }
 
   /* Input inner styling */
   .field-inner {
-    @apply h-11 w-full border-0 bg-black-primary text-font-primary
-           focus-visible:ring-0;
+    @apply h-11 w-full border-0 bg-black-primary text-font-primary focus-visible:ring-0;
     border-radius: inherit;
     box-shadow: var(--shadow-inset);
   }
+
   .field-inner::placeholder {
     @apply text-font-secondary/70;
   }
@@ -125,9 +145,11 @@
     background-color: var(--color-black-primary);
     box-shadow: var(--shadow-elev), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   }
+
   .btn-inner:hover {
     background-color: var(--color-black-tertiary);
   }
+
   .btn-inner:active {
     background-color: var(--color-black-tertiary);
   }
@@ -136,6 +158,7 @@
   .btn-fill-black {
     background-image: var(--gradient-black);
   }
+
   .btn-fill-green {
     background-image: var(--gradient-green-dark);
   }
@@ -144,21 +167,26 @@
     height: 80%;
     padding: 3px;
     position: absolute;
+    bottom: 0px;
     border-radius: var(--radius);
-    box-shadow: var(--shadow-inset); /* TODO: [Cathy] update the shadow-inset for the divider, the one used is for inputs */
-    top: 50%;
-    transform: translateY(-50%);
+    box-shadow: var(--shadow-inset);
+    /* TODO: [Cathy] update the shadow-inset for the divider, the one used is for inputs */
+    /* top: 50%;
+    transform: translateY(-50%); */
   }
 
   .debossed-outer {
     width: 100%;
     padding: 4px;
     border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-inset); /* TODO: update shadow*/
+    /* TODO: update shadow*/
+    box-shadow: var(--shadow-inset);
   }
+
   .debossed-inner {
     width: 100%;
-    box-shadow: var(--shadow-elev); /* TODO: update shadow*/
+    /* TODO: update shadow*/
+    box-shadow: var(--shadow-elev);
     border-radius: var(--radius-xs);
   }
 }
@@ -204,10 +232,14 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
   /* Custom tokens */
-  --border-black-start: oklch(0.5103 0 89); /* #666666 */
-  --border-black-end: oklch(0 0 0); /* #000000 */
-  --border-green-start: oklch(0.3608 0.0439 129.23); /* #364229 */
-  --border-green-end: oklch(0.47 0.0939 129.96); /* #496528 */
+  --border-black-start: oklch(0.5103 0 89);
+  /* #666666 */
+  --border-black-end: oklch(0 0 0);
+  /* #000000 */
+  --border-green-start: oklch(0.3608 0.0439 129.23);
+  /* #364229 */
+  --border-green-end: oklch(0.47 0.0939 129.96);
+  /* #496528 */
 }
 
 .dark {
@@ -248,6 +280,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
