@@ -5,6 +5,7 @@ import bcrypt from "bcryptjs";
 import prisma from "@/lib/server/prisma";
 import { EmploymentStatus, Role } from "@/lib/generated/prisma";
 import { saveFile } from "@/lib/server/routeHelpers";
+import { auth } from "@/auth";
 
 /* 
     TODO: Need to add checking user session and verifying they have access to this route.
@@ -112,5 +113,19 @@ export async function POST(req: Request) {
     if (error.code === "P2002") errorMessage = "Email already exists in the database.";
 
     return NextResponse.json({ error: errorMessage }, { status: 500 });
+  }
+}
+
+export async function GET(req: Request) {
+  const session = await auth();
+  if (!session) {
+    return NextResponse.json({ message: "unauthorized" });
+  }
+  try {
+    const users = await prisma.user.findMany();
+    return NextResponse.json({ message: "Successfully retrived users!", users: users });
+  } catch (error) {
+    console.log(error);
+    return NextResponse.json({ message: error });
   }
 }
