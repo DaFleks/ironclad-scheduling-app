@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 
 import bcrypt from "bcryptjs";
 
-import prisma from "@/lib/server/prisma";
 import { EmploymentStatus, Role } from "@/lib/generated/prisma";
 import { saveFile } from "@/lib/server/routeHelpers";
 import { auth } from "@/auth";
+import prisma from "@/lib/prisma";
 
 /* 
     TODO: Need to add checking user session and verifying they have access to this route.

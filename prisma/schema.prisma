@@ -1,0 +1,358 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+//  -- MODELS -- 
+
+//  ** ENTITY MODEL **
+model Entity {
+  id         String   @id @default(uuid())
+  name       String   @unique // e.g., "Ironclad"
+  legalName  String?
+  email      String?
+  phone      String?
+  street     String?
+  unit       String?
+  city       String?
+  province   String?
+  postalCode String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  createdBy  String
+
+  // Relationships
+  users  User[]
+  guards Guard[]
+  venues Venue[]
+  events Event[]
+  shifts Shift[]
+}
+
+// future we will need to integrate stripe and collect recurring payments
+
+//  ** USER MODEL **
+model User {
+  id        String   @id @default(uuid())
+  firstName String
+  lastName  String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Auth & Access
+  role        Role    @default(GENERAL)
+  permissions String
+  /**
+   * Changed permissions to single string as it doesn't support a list for primitive types,
+   * we can possibly delimit permissions by ',' or talk about how we go about it
+   */
+  isActive    Boolean @default(false)
+
+  // Metadata
+  phoneNumber    String?
+  streetAddress  String?
+  unitNumber     String? // REMOVE
+  city           String?
+  province       String?
+  postalCode     String?
+  userAvatar     String?
+  note           String?
+  lastModifiedBy String?
+
+  // Relationships
+  guardId  String?
+  Guard    Guard?
+  Event    Event[]
+  entityId String // <= Entity FK
+  entity   Entity    @relation(fields: [entityId], references: [id])
+  accounts Account[]
+  sessions Session[]
+
+  @@index([entityId])
+}
+
+//  ** ACCOUNT MODEL **
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+//  ** SESSION MODEL **
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+//  ** VERIFCATION TOKEN MODEL **
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+//  ** GUARD MODEL **
+model Guard {
+  id               String           @id @default(uuid())
+  position         ShiftRole
+  employmentStatus EmploymentStatus @default(ACTIVE)
+  rate             Float
+  licenseNumber    String
+  smartServe       String
+  casualAttire     Boolean
+  semiFormalAttire Boolean
+  formalAttire     Boolean
+  moneyOwed        Float
+  notes            String?
+  createdBy        String?
+
+  // Operational
+  qrCodeData    String?
+  lastCheckedIn DateTime // junction table for check-ins with shift and guard
+
+  // Relationships
+  shifts   Shift[]
+  Payment  Payment[]
+  entity   Entity    @relation(fields: [entityId], references: [id])
+  entityId String
+  user     User      @relation(fields: [userId], references: [id])
+  userId   String    @unique
+}
+
+//  ** EVENT MODEL **
+model Event {
+  id               String   @id @default(uuid())
+  title            String?
+  description      String?
+  date             DateTime
+  startTime        DateTime
+  projectedEndTime DateTime
+  endTime          DateTime
+  billOvertime     Boolean  @default(false)
+  attire           Attire
+
+  // Default is to use venue rates unless overrides are set
+  overrideRates Boolean @default(false)
+
+  // Optional rate overrides per role
+  overrideHeadOfSecurityRate Float?
+  overrideDooormanRate       Float?
+  overrideFloaterRate        Float?
+  overrideHPostRate          Float?
+
+  // Optional attire rate override
+  overrideAttireRate Float?
+
+  eventStatus   EventStatus @default(SCHEDULED)
+  scheduledBy   User        @relation(fields: [scheduledById], references: [id])
+  scheduledById String
+
+  postEventNotes String?
+  incidentReport String?
+
+  invoicedStatus Boolean
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Relationships
+  shifts   Shift[]
+  entity   Entity  @relation(fields: [entityId], references: [id])
+  entityId String
+  venue    Venue   @relation(fields: [venueId], references: [id])
+  venueId  String
+}
+
+//  ** VENUE MODEL **
+model Venue {
+  id            String   @id @default(uuid())
+  name          String   @unique
+  createdAt     DateTime @default(now())
+  defaultAttire Attire
+
+  // Base Rates by Role
+  headOfSecurityRate Float?
+  doormanRate        Float?
+  floaterRate        Float?
+  postRate           Float?
+  searcherRate       Float?
+
+  // Attire Rate Relationship
+  attireRates AttireRate[]
+
+  // Relationships
+  events   Event[]
+  Shift    Shift[]
+  entity   Entity  @relation(fields: [entityId], references: [id])
+  entityId String
+
+  // Make venue names unique per entity (allows same name across different entities)
+  @@unique([entityId, name])
+  @@index([entityId])
+}
+
+//  ** ATTIRE RATE MODEL **
+model AttireRate {
+  id     String @id @default(uuid())
+  attire Attire
+  rate   Float
+
+  //  Relationships
+  venue   Venue  @relation(fields: [venueId], references: [id])
+  venueId String
+
+  @@unique([venueId, attire]) // Enforce one attire rate per venue-attire pair
+}
+
+//  ** PAYMENT MODEL **
+model Payment {
+  id           String        @id @default(uuid())
+  subtotal     Float
+  moneyOwed    Float
+  useOwedValue Boolean
+  total        Float
+  method       PaymentMethod
+  status       PaymentStatus @default(PENDING)
+  paidAt       DateTime?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  notes        String
+
+  //  Relationships
+  guard   Guard  @relation(fields: [guardId], references: [id])
+  guardId String
+  shift   Shift  @relation(fields: [shiftId], references: [id])
+  shiftId String @unique // One payment per shift
+
+  @@index([guardId])
+  @@index([shiftId])
+}
+
+//  ** SHIFT MODEL **
+model Shift {
+  id               String   @id @default(uuid())
+  entity           Entity   @relation(fields: [entityId], references: [id])
+  entityId         String
+  date             DateTime
+  startTime        DateTime
+  projectedEndTime DateTime
+  endTime          DateTime
+  payOvertime      Boolean  @default(false)
+  /**
+   * --> needs to be tied to the event as well.
+   * --> no shift should ever exceed the event end time which means the event
+   * --> end time needs to be updated also for that specific guard or for
+   * --> multiple guards. Neco wants an option to update event time for
+   * --> all guards in case the entire event goes over but then also the
+   * --> option to update individual guard shifts if only certain guards
+   * --> worked OT but that also needs to be reflected on the event for invoicing.
+   */
+
+  // Role for this specific shift (can override default guard position)
+  // This override will happen in the invoicing section of the app, not the event or shift section, but the data should be stored in the shift table as that's what it pertains to.
+  role       ShiftRole
+  customRate Float? // Optional override of guard.rate
+
+  // Venue (used mostly for legacy or backup reference)
+  venue   Venue  @relation(fields: [venueId], references: [id])
+  venueId String
+
+  // Event this shift belongs to
+  event   Event  @relation(fields: [eventId], references: [id])
+  eventId String
+
+  // Guard assigned to this shift
+  guard   Guard  @relation(fields: [guardId], references: [id])
+  guardId String
+
+  notes     String?
+  createdAt DateTime @default(now())
+
+  // Optional link to payment record
+  payment Payment?
+
+  // Indexes
+  @@index([date])
+  @@index([guardId])
+  @@index([eventId])
+  @@index([venueId])
+}
+
+// -- ENUMS --
+enum EventStatus {
+  SCHEDULED
+  COMPLETED
+  CANCELLED
+}
+
+enum Attire {
+  CASUAL
+  SEMI_FORMAL
+  FORMAL
+}
+
+enum PaymentMethod {
+  ETRANSFER
+  CASH
+  PAYROLL
+  OTHER
+}
+
+enum Role {
+  ADMIN
+  GENERAL
+}
+
+enum ShiftRole {
+  HEADOFSECURITY
+  DOORMAN
+  FLOATER
+  POST
+  SEARCHER
+}
+
+enum EmploymentStatus {
+  ACTIVE
+  INACTIVE
+  TERMINATED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  CANCELLED
+}
