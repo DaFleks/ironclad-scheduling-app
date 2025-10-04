@@ -15,11 +15,8 @@ export default async function Profiles() {
   // TODO: check user, see what perms they have
   // TODO: One function that does an API call to request Guards, Venues & Users, the route would return all 3 sets of data at once.
 
-  // Get the current session cookies that are stored in the browser
-  const cookieStore = await cookies();
-
   // Retrieve the users from the API route while passing the session data
-  const { users } = await getAllUsers(cookieStore);
+  const { users } = await getAllUsers();
 
   return (
     // ? do we need p-12 here? - Cathy double check styles
