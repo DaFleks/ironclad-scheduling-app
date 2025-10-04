@@ -10,7 +10,7 @@ export default auth((req) => {
   }
 });
 
-// Match all routes, but skip _next (static), favicon, and api/auth
+//  Excluding API routes as we only want redirect occurring when trying to access a page.
 export const config = {
   matcher: ["/((?!_next|favicon.ico|api).*)"],
 };

@@ -1,6 +1,6 @@
 import path from "path";
 import { promises as fs } from "fs";
-import prisma from "@/lib/server/prisma";
+import prisma from "@/lib/prisma";
 
 export async function saveFile(file: File, folderName: string, id: string) {
   // Generate unique file name

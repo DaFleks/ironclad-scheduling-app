@@ -6,7 +6,7 @@ import { ZodError } from "zod";
 import bcrypt from "bcryptjs";
 
 import { signInSchema } from "./lib/zod";
-import prisma from "@/lib/server/prisma";
+import prisma from "@/lib/prisma";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [
